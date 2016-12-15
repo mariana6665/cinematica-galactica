@@ -21,6 +21,7 @@ lon = values(header,2)
 lat = values(header,3)
 j = 1000
 
+#arreglos iniciales con ceros
 v = np.zeros(385)
 radios = np.zeros(385)
 velocidades = np.zeros(385)
@@ -56,13 +57,15 @@ for q in range (0,len(lon)):
         latitudes[q] = lat[b[q]]
 for vel in range (0,len(lon)):
         Vabs[vel] = abs(velocidades[vel])
-for rad in range (0,len(lon)):
-        radios[rad] = -8.5*np.sin(np.pi*lon[rad]/180)
+#radio R entre el cuerpo y el C.G.
 for rad in range (0,len(lon)):
         radios[rad] = -8.5*np.sin(np.pi*lon[rad]/180)
 
+#velocidades de rotacion
 vrot = Vabs + radios*220/8.5
+#altura Z de cada cuerpo
 Z = abs(8.5*np.cos(lon*np.pi/180)*np.sin(latitudes*np.pi/180))
+#distancia D del sol a cada cuerpo
 distancia = abs(8.5*np.cos(lon*np.pi/180))
 archivo = open('masa.dat','w')
 
@@ -113,7 +116,7 @@ plt.plot(R, vrot, 'm.')
 plt.xlabel("Radio/Ro")
 plt.ylabel("Velocidad de rotacion [km/s]")
 plt.title("Velocidad de rotacion en funcion del Radio")
-plt.axis([0.1, 0.9, 180, 260])
+plt.axis([0.1, 0.9, 0, 350])
 plt.show()
 fig.savefig('vel_rot.png')
 
